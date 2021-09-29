@@ -108,7 +108,7 @@ export default {
     margin-bottom: 17px;
 
     &__list {
-      min-width: 115px;
+      min-width: 135px;
       margin-right: 16px;
     }
 
