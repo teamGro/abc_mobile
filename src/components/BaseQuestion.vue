@@ -1,14 +1,14 @@
 <template>
-  <div class="additional-text" v-if="currentQuestionNormalized.additionalText">
-    {{ currentQuestionNormalized.additionalText }}
+  <div class="additional-text" v-if="currentQuestion.additionalText">
+    {{ currentQuestion.additionalText }}
   </div>
 
-  <div class="question" :class="{'question_first': currentQuestionNormalized.id === 1}">
+  <div class="question" :class="{'question_first': currentQuestion.id === 1}">
     <p class="question__text">
-      {{ currentQuestionNormalized.question }}
+      {{ currentQuestion.question }}
     </p>
 
-     <div v-if="currentQuestionNormalized.type === 'date'">
+     <div v-if="currentQuestion.type === 'date'">
       <base-date-select
         v-for="item, i in date"
         :key="i"
@@ -22,7 +22,7 @@
 
        <button
         class="question__answer-btn question__answer-btn_date"
-        v-for="(answer, i) in currentQuestionNormalized.answers"
+        v-for="(answer, i) in currentQuestion.answers"
         :key="i"
         @click="saveDateAnswer(answer)">
         {{ answer }}
@@ -32,7 +32,7 @@
     <div class="question__answers" v-else>
       <button
         class="question__answer-btn"
-        v-for="(answer, i) in currentQuestionNormalized.answers"
+        v-for="(answer, i) in currentQuestion.answers"
         :key="i"
         @click="saveAnswer(answer)">
         {{ answer }}
@@ -40,7 +40,7 @@
     </div>
 
     <p class="question__num">
-      Вопрос {{ currentQuestionNormalized.id }}-{{ allQuestions }}
+      Вопрос {{ currentQuestion.id }}-{{ allQuestions }}
     </p>
   </div>
 </template>
@@ -83,29 +83,12 @@ export default {
   },
   computed: {
     ...mapGetters(['currentQuestion', 'allQuestions']),
-    currentQuestionNormalized() {
-      const question = this.currentQuestion[0];
-
-      if (question.type === 'depend') {
-        const age = this.$store.state.userAge;
-        if (age < 36) {
-          question.additionalText = question.additionalText[0].text;
-        } else if (age < 46) {
-          question.additionalText = question.additionalText[1].text;
-        } else {
-          question.additionalText = question.additionalText[2].text;
-        }
-      }
-
-      return question;
-    },
   },
   methods: {
     saveAnswer(answer) {
-      this.$store.commit('answers', { questionId: this.currentQuestionNormalized.id, answer });
-
       if (!this.$route.params.id || this.allQuestions > this.$route.params.id) {
-        this.$router.push({ name: 'question', params: { id: this.$store.state.currentQuestionId } });
+        this.$store.commit('answers', answer);
+        this.$router.push({ name: 'question', params: { id: this.currentQuestion.id + 1 } });
       } else {
         this.$router.push({ name: 'audioMesage' });
       }
@@ -122,11 +105,11 @@ export default {
 
       const answer = transformDate(this.date.map((item) => (item.selected)));
 
-      this.$store.commit('answers', { questionId: this.currentQuestionNormalized.id, answer });
+      this.$store.commit('answers', answer);
       this.$store.commit('userAge', getAge(answer));
 
       if (this.allQuestions > this.$route.params.id) {
-        this.$router.push({ name: 'question', params: { id: this.$store.state.currentQuestionId } });
+        this.$router.push({ name: 'question', params: { id: this.currentQuestion.id + 1 } });
       } else {
         this.$router.push({ name: 'audioMesage' });
       }
@@ -171,7 +154,7 @@ export default {
       border: none;
       width: 113px;
       min-height: 41px;
-      // padding: 11.5px 8px;
+      cursor: pointer;
       margin-bottom: 32px;
 
       font-size: 16px;
@@ -182,12 +165,18 @@ export default {
       background-color: #1A73EB;
       border-radius: 3px;
 
+      transition: opacity .2s linear;
+
       &:nth-child(2n + 1) {
         margin-right: 15px;
       }
 
       &_date {
         margin-top: 30px;
+      }
+
+      &:hover {
+        opacity: .7;
       }
     }
 
@@ -204,6 +193,13 @@ export default {
   .date-select {
     &:not(:last-child) {
       margin-bottom: 13px;
+    }
+  }
+
+  @media(min-width: 768px) {
+    .question {
+      padding-left: 80px;
+      padding-right: 80px;
     }
   }
 </style>

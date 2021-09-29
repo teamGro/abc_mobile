@@ -95,10 +95,7 @@ export default {
   .container__last-page {
     display: flex;
     flex-direction: column;
-  }
-
-  .data-loaded {
-    height: 100vh;
+    min-height: 100vh;
   }
 
   .text {

@@ -72,6 +72,7 @@ export default {
 <style lang="less">
   .select {
     position: relative;
+    height: 41px;
 
     &__list {
     position: relative;
@@ -86,6 +87,7 @@ export default {
     }
 
     &__title {
+      cursor: pointer;
       width: 113px;
       padding: 10px 0;
       display: flex;
@@ -107,9 +109,17 @@ export default {
       display: none;
       width: 113px;
       padding: 10px 0;
+      cursor: pointer;
+
+      &:hover {
+        background-color: gray;
+        opacity: .5;
+      }
     }
 
     &__list_open {
+      position: absolute;
+      z-index: 10;
       display: flex;
       flex-direction: column;
       height: 200px;

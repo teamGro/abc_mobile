@@ -1,13 +1,60 @@
 <template>
-  <router-view></router-view>
+  <router-view v-slot="{ Component, route }">
+    <transition name="fade" mode="out-in">
+      <component :is="Component" :key="route.path" />
+    </transition>
+  </router-view>
 </template>
 
 <script>
 export default {
+  watch: {
+    $route() {
+      if (this.$route.name === 'main') {
+        this.$store.commit('updateCurrentQuestionId', 1);
+      }
+      console.log(this.$route.params.id);
+    },
+  },
 };
 </script>
 
 <style lang="less">
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s ease;
+  }
+
+  .fade-enter-from,
+  .fade-leave-to {
+    opacity: 0;
+  }
+
+    /* roboto-300 - latin_cyrillic */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 300;
+    src: url('/fonts/roboto-v29-latin_cyrillic-300.woff2') format('woff2'),
+        url('/fonts/roboto-v29-latin_cyrillic-300.woff') format('woff'),
+  }
+  /* roboto-regular - latin_cyrillic */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/fonts/roboto-v29-latin_cyrillic-regular.woff2') format('woff2'),
+        url('/fonts/roboto-v29-latin_cyrillic-regular.woff') format('woff'),
+  }
+  /* roboto-900 - latin_cyrillic */
+  @font-face {
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 900;
+    src: url('/fonts/roboto-v29-latin_cyrillic-900.woff2') format('woff2'),
+        url('/fonts/roboto-v29-latin_cyrillic-900.woff') format('woff'),
+  }
+
   html {
     width: 100%;
     max-width: 100%;
@@ -49,6 +96,10 @@ export default {
     font: inherit;
     font-size: 1.125em;
     line-height: 1.5em;
+  }
+
+  button {
+    cursor: pointer;
   }
 
   ul {
@@ -97,12 +148,6 @@ export default {
     padding: 15px 10px 0;
   }
 
-  input:hover,
-  input:focus,
-  input:active {
-    outline: none;
-  }
-
   .experts {
     display: flex;
     margin-bottom: 17px;
@@ -130,6 +175,26 @@ export default {
       &_red {
         color: #DE5044;
       }
+    }
+  }
+
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s ease-out;
+  }
+
+  .fade-enter-from, .fade-leave-to {
+    opacity: 0;
+  }
+
+  @media(min-width: 992px) {
+    body {
+      font-size: 18px;
+      line-height: 25px;
+    }
+
+    .container {
+      padding-top: 66px;
+      padding-bottom: 66px;
     }
   }
 </style>

@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainPage from '@/pages/MainPage.vue';
-import Question from '@/pages/QuestionPage.vue';
-import RecordAudioMessage from '@/pages/RecordAudioMessagePage.vue';
+import QuestionPage from '@/pages/QuestionPage.vue';
+import RecordAudioMessagPage from '@/pages/RecordAudioMessagePage.vue';
 import LastPage from '@/pages/LastPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
 
@@ -11,26 +11,31 @@ const routes = [
     name: 'main',
     path: '/',
     component: MainPage,
+    meta: { transition: 'slide-left' },
   },
   {
     name: 'question',
     path: '/question/:id',
-    component: Question,
+    component: QuestionPage,
+    meta: { transition: 'slide-left' },
   },
   {
     name: 'audioMesage',
     path: '/audio',
-    component: RecordAudioMessage,
+    component: RecordAudioMessagPage,
+    meta: { transition: 'slide-left' },
   },
   {
     name: 'last',
     path: '/finish',
     component: LastPage,
+    meta: { transition: 'slide-left' },
   },
   {
     name: 'notFound',
     path: '/:notFound(.*)',
     component: NotFoundPage,
+    meta: { transition: 'slide-left' },
   },
 ];
 

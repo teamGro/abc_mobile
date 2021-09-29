@@ -36,20 +36,11 @@ export default createStore({
         question: 'Запись, которую Вы услышите, может шокировать людей с неокрепшей психикой. Вы готовы узнать, что ждет именно Вас?',
         answers: ['Да', ' Затрудняюсь ответить'],
         type: 'depend',
-        additionalText: [
-          {
-            age: [18, 35],
-            text: 'По вам скучает очень близкий человек, которого больше нет в мире живых.',
-          },
-          {
-            age: [36, 45],
-            text: 'По вам скучает очень близкий человек, которого больше нет в мире живых. Возможно это дедушка или бабушка.',
-          },
-          {
-            age: [46],
-            text: 'По вам скучает очень близкий человек, которого больше нет в мире живых. Возможно это кто-то из Ваших родителей.',
-          },
-        ],
+        texts: {
+          young: 'По вам скучает очень близкий человек, которого больше нет в мире живых.',
+          middle: 'По вам скучает очень близкий человек, которого больше нет в мире живых. Возможно это дедушка или бабушка.',
+          old: 'По вам скучает очень близкий человек, которого больше нет в мире живых. Возможно это кто-то из Ваших родителей.',
+        },
       },
     ],
     answers: [],
@@ -76,13 +67,6 @@ export default createStore({
   mutations: {
     answers(state, { questionId, answer }) {
       state.answers.push({ questionId, answer });
-
-      if (state.questions.length > state.currentQuestionId) {
-        state.currentQuestionId += 1;
-        return true;
-      }
-
-      return false;
     },
     updateCurrentQuestionId(state, questionId) {
       state.currentQuestionId = questionId;
@@ -96,7 +80,18 @@ export default createStore({
   },
   getters: {
     currentQuestion(state) {
-      return state.questions.filter((item) => (item.id === state.currentQuestionId));
+      const question = state.questions.find((item) => (item.id === state.currentQuestionId));
+      if (question.type === 'depend') {
+        const age = state.userAge;
+        if (age < 36) {
+          question.additionalText = question.texts.young;
+        } else if (age < 46) {
+          question.additionalText = question.texts.middle;
+        } else {
+          question.additionalText = question.texts.old;
+        }
+      }
+      return question;
     },
     allQuestions(state) {
       return state.questions.length;
