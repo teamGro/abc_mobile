@@ -103,7 +103,14 @@ export default {
   methods: {
     saveAnswer(answer) {
       this.$store.commit('answers', { questionId: this.currentQuestionNormalized.id, answer });
-      this.$router.push({ name: 'question', params: { id: this.$store.state.currentQuestionId } });
+
+      if (!this.$route.params.id || this.allQuestions > this.$route.params.id) {
+        this.$router.push({ name: 'question', params: { id: this.$store.state.currentQuestionId } });
+      } else {
+        this.$router.push({ name: 'audioMesage' });
+      }
+
+      return false;
     },
     saveDateAnswer() {
       const isFieldsFilled = this.date.find((item) => item.isFilled === false);
@@ -120,7 +127,8 @@ export default {
 
       if (this.allQuestions > this.$route.params.id) {
         this.$router.push({ name: 'question', params: { id: this.$store.state.currentQuestionId } });
-        return true;
+      } else {
+        this.$router.push({ name: 'audioMesage' });
       }
 
       return false;

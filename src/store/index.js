@@ -71,6 +71,7 @@ export default createStore({
         alt: 'Эксперт №3',
       },
     ],
+    serverResponse: null,
   },
   mutations: {
     answers(state, { questionId, answer }) {
@@ -89,6 +90,9 @@ export default createStore({
     userAge(state, userAge) {
       state.userAge = userAge;
     },
+    loadData(state, data) {
+      state.serverResponse = data;
+    },
   },
   getters: {
     currentQuestion(state) {
@@ -97,9 +101,5 @@ export default createStore({
     allQuestions(state) {
       return state.questions.length;
     },
-  },
-  actions: {
-  },
-  modules: {
   },
 });
