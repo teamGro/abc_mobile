@@ -198,8 +198,20 @@ export default {
 
   @media(min-width: 768px) {
     .question {
-      padding-left: 80px;
-      padding-right: 80px;
+      padding-left: 40px;
+      padding-right: 40px;
+
+      &__answer-btn {
+        width: 200px;
+        min-height: 60px;
+        margin-bottom: 32px;
+
+        font-size: 20px;
+
+        &:nth-child(2n + 1) {
+          margin-right: 25px;
+        }
+      }
     }
   }
 </style>

@@ -88,7 +88,7 @@ export default {
 
     &__title {
       cursor: pointer;
-      width: 113px;
+      width: 100%;
       padding: 10px 0;
       display: flex;
       align-items: center;
@@ -96,7 +96,6 @@ export default {
       border: 1px solid transparent;
       border-radius: 3px;
 
-      font-size: 16px;
       color: #202024;
 
       &_empty {
@@ -107,7 +106,7 @@ export default {
 
     &__item {
       display: none;
-      width: 113px;
+      width: 100%;
       padding: 10px 0;
       cursor: pointer;
 
@@ -130,6 +129,28 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  @media(min-width: 768px) {
+    .select {
+      height: 60px;
+
+      &__list {
+        width: 200px;
+        height: 60px;
+
+        font-size: 20px;
+
+        &_open {
+          height: 200px;
+        }
+      }
+
+      &__title, &__item {
+        padding-top: 15px;
+        padding-bottom: 15px;
+      }
     }
   }
 </style>

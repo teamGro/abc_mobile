@@ -24,9 +24,11 @@
       <b>Прослушайте важную информацию!</b>
     </p>
 
-    <div class="call-btn-wrapper">
+    <div class="call-btn-wrapper" v-if="!dataLoading && !dataLoaded">
       <button class="call-btn" @click="loadData">Позвонить и прослушать</button>
     </div>
+
+    <loader v-else-if="dataLoading && !dataLoaded"></loader>
 
     <div v-if="dataLoaded" class="text">
       <ul>
@@ -37,8 +39,15 @@
         <li>Цвет волос: <b>{{ serverResponse.hair_color }}</b></li>
         <li>Дата рождения: <b>{{ serverResponse.birth_year }}</b></li>
         <li>Фильмы:
-          <button type="button" v-if="!isShowFilms" @click.prevent="showFilms">Показать</button>
-          <b v-for="item in filmsTitle" :key="item.title">
+          <button
+            type="button"
+            class="show-btn"
+            v-if="!isShowFilms && !filmsLoading"
+            @click.prevent="showFilms">
+            Показать
+          </button>
+          <loader v-else-if="!isShowFilms && filmsLoading"></loader>
+          <b v-else v-for="item in filmsTitle" :key="item.title">
             "{{ item }}" <br>
           </b>
         </li>
@@ -54,12 +63,16 @@
 
 <script>
 import axios from 'axios';
+import Loader from '@/components/Loader.vue';
 
 export default {
+  components: { Loader },
   data() {
     return {
       dataLoaded: false,
+      dataLoading: false,
       isShowFilms: false,
+      filmsLoading: false,
       filmsTitle: [],
     };
   },
@@ -70,22 +83,29 @@ export default {
   },
   methods: {
     loadData() {
+      this.dataLoading = true;
       axios.get('https://swapi.dev/api/people/1/')
         .then((response) => {
           this.$store.commit('loadData', response.data);
+          this.dataLoading = false;
           this.dataLoaded = true;
         })
-        .catch(() => {});
+        .catch(() => {})
+        .then(() => { this.dataLoading = false; });
     },
     showFilms() {
+      this.filmsLoading = true;
       const requests = this.serverResponse.films.map((url) => axios.get(url));
       Promise.all(requests)
         .then((responses) => responses.forEach(
           (response) => {
             this.filmsTitle.push(response.data.title);
+            this.filmsLoading = false;
             this.isShowFilms = true;
           },
-        ));
+        ))
+        .catch(() => {})
+        .then(() => { this.filmsLoading = false; });
     },
   },
 };
@@ -136,7 +156,7 @@ export default {
     margin-bottom: 20px;
   }
 
-  .call-btn {
+  .call-btn, .show-btn {
     border: none;
     padding: 10.5px 15px;
     background: #169F5C;
@@ -145,6 +165,10 @@ export default {
     color: #fff;
     font-size: 16px;
     line-height: 19px;
+  }
+
+  .show-btn {
+    padding: 5px 7px;
   }
 
   .footer {
