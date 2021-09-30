@@ -1,7 +1,7 @@
 import { createStore } from 'vuex';
-import face1 from '@/assets/face1.jpg';
-import face2 from '@/assets/face2.jpg';
-import face3 from '@/assets/face3.jpg';
+import face1 from '@/assets/img/face1.jpg';
+import face2 from '@/assets/img/face2.jpg';
+import face3 from '@/assets/img/face3.jpg';
 
 export default createStore({
   state: {

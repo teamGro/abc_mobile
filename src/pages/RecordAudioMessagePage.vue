@@ -20,13 +20,14 @@
 </template>
 
 <script>
-import mic from '@/assets/microphone.svg';
+import mic from '@/assets/img/microphone.svg';
 
 export default {
   data() {
     return {
       progress: 0,
       mic,
+      timer: null,
     };
   },
   computed: {
@@ -34,13 +35,21 @@ export default {
   },
   created() {
     const self = this;
-    const timer = setInterval(() => {
+    this.timer = setInterval(() => {
       self.progress += 1;
-      if (self.progress === 100) {
-        clearInterval(timer);
+      if (self.progress === 100 || self.$route.name !== 'audioMesage') {
+        clearInterval(self.timer);
         self.$router.push({ name: 'last' });
       }
     }, 50);
+  },
+  unmounted() {
+    this.timer = null;
+  },
+  watch: {
+    $route() {
+      this.timer = null;
+    },
   },
 };
 </script>

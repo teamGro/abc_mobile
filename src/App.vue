@@ -30,31 +30,6 @@ export default {
     opacity: 0;
   }
 
-    /* roboto-300 - latin_cyrillic */
-  @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 300;
-    src: url('/fonts/roboto-v29-latin_cyrillic-300.woff2') format('woff2'),
-        url('/fonts/roboto-v29-latin_cyrillic-300.woff') format('woff'),
-  }
-  /* roboto-regular - latin_cyrillic */
-  @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    src: url('/fonts/roboto-v29-latin_cyrillic-regular.woff2') format('woff2'),
-        url('/fonts/roboto-v29-latin_cyrillic-regular.woff') format('woff'),
-  }
-  /* roboto-900 - latin_cyrillic */
-  @font-face {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 900;
-    src: url('/fonts/roboto-v29-latin_cyrillic-900.woff2') format('woff2'),
-        url('/fonts/roboto-v29-latin_cyrillic-900.woff') format('woff'),
-  }
-
   html {
     width: 100%;
     max-width: 100%;
@@ -195,6 +170,10 @@ export default {
     .container {
       padding-top: 50px;
       padding-bottom: 50px;
+    }
+
+    .experts__list {
+      min-width: 250px;
     }
   }
 </style>

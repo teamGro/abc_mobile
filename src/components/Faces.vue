@@ -50,4 +50,23 @@ export default {
       height: 100%;
     }
   }
+
+  @media(min-width: 992px) {
+    .faces {
+      height: 85px;
+
+      &__item {
+        width: 85px;
+        height: 85px;
+
+        &:nth-child(2) {
+          left: -20px;
+        }
+
+        &:nth-child(3) {
+          left: -40px;
+        }
+      }
+    }
+  }
 </style>
