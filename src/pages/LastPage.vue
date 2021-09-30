@@ -90,7 +90,7 @@ export default {
           this.dataLoading = false;
           this.dataLoaded = true;
         })
-        .catch(() => {})
+        .catch(() => { alert('Что-то пошло не так, попробуйте ещё раз'); })
         .then(() => { this.dataLoading = false; });
     },
     showFilms() {
