@@ -234,6 +234,7 @@ export default {
       }
 
       &__text {
+        margin-bottom: 55px;
         font-size: 30px;
         line-height: 35px;
       }

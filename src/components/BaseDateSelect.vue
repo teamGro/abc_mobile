@@ -149,7 +149,7 @@ export default {
 
       &__title, &__item {
         padding-top: 19px;
-        padding-bottom: 20px;
+        padding-bottom: 13px;
       }
     }
   }
