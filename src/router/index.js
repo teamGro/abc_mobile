@@ -4,8 +4,9 @@ import QuestionPage from '@/pages/QuestionPage.vue';
 import RecordAudioMessagPage from '@/pages/RecordAudioMessagePage.vue';
 import LastPage from '@/pages/LastPage.vue';
 import NotFoundPage from '@/pages/NotFoundPage.vue';
+import config from '../../vue.config';
 
-const history = createWebHistory();
+const history = createWebHistory(config.publicPath);
 const routes = [
   {
     name: 'main',
