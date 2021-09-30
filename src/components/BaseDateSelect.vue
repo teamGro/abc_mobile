@@ -143,13 +143,13 @@ export default {
         font-size: 20px;
 
         &_open {
-          height: 200px;
+          height: 400px;
         }
       }
 
       &__title, &__item {
-        padding-top: 15px;
-        padding-bottom: 15px;
+        padding-top: 19px;
+        padding-bottom: 20px;
       }
     }
   }

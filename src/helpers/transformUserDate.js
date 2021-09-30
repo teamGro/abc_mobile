@@ -6,6 +6,7 @@ function transformDate(date) {
   for (let i = 0; i < months.length; i += 1) {
     if (month === months[i]) {
       month = i;
+      break;
     }
   }
   const year = date[2];

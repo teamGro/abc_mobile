@@ -12,7 +12,7 @@
       <base-date-select
         v-for="item, i in date"
         :key="i"
-        :dateRange="item.amount"
+        :dateRange="item.quantity"
         :initialValue="item.initialValue"
         v-model:selectedValue="item.selected"
         v-model:isFilled="item.isFilled"
@@ -51,6 +51,7 @@ import BaseDateSelect from '@/components/BaseDateSelect.vue';
 import months from '@/helpers/months';
 import transformDate from '@/helpers/transformUserDate';
 import getAge from '@/helpers/getAge';
+import checkLastDayOfMonth from '@/helpers/checkLastDayOfMonth';
 
 export default {
   components: { BaseDateSelect },
@@ -60,21 +61,21 @@ export default {
         {
           initialValue: 'День',
           selected: '',
-          amount: 31,
+          quantity: 31,
           isFilled: false,
           isChecked: false,
         },
         {
           initialValue: 'Месяц',
           selected: '',
-          amount: months,
+          quantity: months,
           isFilled: false,
           isChecked: false,
         },
         {
           initialValue: 'Год',
           selected: '',
-          amount: [new Date().getFullYear() - 18, new Date().getFullYear() - 100],
+          quantity: [new Date().getFullYear() - 18, new Date().getFullYear() - 100],
           isFilled: false,
           isChecked: false,
         },
@@ -100,6 +101,20 @@ export default {
 
       if (isFieldsFilled) {
         isFieldsFilled.isChecked = true;
+        return false;
+      }
+
+      const userDate = checkLastDayOfMonth(
+        this.date[2].selected,
+        this.date[1].selected,
+        this.date[0].selected,
+      );
+
+      if (!userDate.status) {
+        this.date[0].quantity = userDate.lastDay;
+        this.date[0].isFilled = false;
+        this.date[0].isChecked = true;
+        this.date[0].selected = '';
         return false;
       }
 
@@ -197,6 +212,11 @@ export default {
   }
 
   @media(min-width: 768px) {
+    .additional-text {
+      font-size: 18px;
+      line-height: 25px;
+    }
+
     .question {
       padding-left: 40px;
       padding-right: 40px;
@@ -211,6 +231,15 @@ export default {
         &:nth-child(2n + 1) {
           margin-right: 25px;
         }
+      }
+
+      &__text {
+        font-size: 30px;
+        line-height: 35px;
+      }
+
+      &__num {
+        font-size: 18px;
       }
     }
   }
