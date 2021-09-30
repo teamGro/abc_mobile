@@ -1,7 +1,7 @@
 <template>
   <div class="container audio">
     <div class="audio__mic-wrapper">
-      <img class="audio__mic" src="/img/microphone.svg" alt="">
+      <img class="audio__mic" :src="mic" alt="Запись аудио">
 
       <svg class="spinner" width="128" height="128">
         <circle class="path" cx="64" cy="64" r="60" fill="none" stroke-width="8"></circle>
@@ -20,10 +20,13 @@
 </template>
 
 <script>
+import mic from '@/assets/microphone.svg';
+
 export default {
   data() {
     return {
       progress: 0,
+      mic,
     };
   },
   computed: {

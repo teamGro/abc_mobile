@@ -1,4 +1,7 @@
 import { createStore } from 'vuex';
+import face1 from '@/assets/face1.jpg';
+import face2 from '@/assets/face2.jpg';
+import face3 from '@/assets/face3.jpg';
 
 export default createStore({
   state: {
@@ -48,17 +51,17 @@ export default createStore({
     experts: [
       {
         id: 1,
-        url: '/img/face1.jpg',
+        url: face1,
         alt: 'Эксперт №1',
       },
       {
         id: 2,
-        url: '/img/face2.jpg',
+        url: face2,
         alt: 'Эксперт №2',
       },
       {
         id: 3,
-        url: '/img/face3.jpg',
+        url: face3,
         alt: 'Эксперт №3',
       },
     ],
